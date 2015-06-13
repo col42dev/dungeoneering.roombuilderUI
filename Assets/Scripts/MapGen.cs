@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
+//using System.Threading;
 using System.IO;
 
 
@@ -95,34 +95,12 @@ public class MapGen : MonoBehaviour {
 			}
 		}
 
-		// render debug navlinks
-		if (tgs != null && tgs.tileGraph != null) {
-			foreach (KeyValuePair<string, Tile> tileGraphNodeKVP in tgs.tileGraph) {
-				Tile thisTile = tileGraphNodeKVP.Value;
-
-				string[] source = tileGraphNodeKVP.Key.Split (':');
-				Vector2 sourcenav = new Vector2 ( float.Parse(source [0]), float.Parse(source [1]) );
-
-				if (thisTile.navlinks != null) {
-					foreach (KeyValuePair<string, NavLink> navlinkKVP in thisTile.navlinks) {
-						NavLink thisNavLink = navlinkKVP.Value;
-						if (thisNavLink.open == true) {
-							string[] target = navlinkKVP.Key.Split (':');
-							Vector2 targetnav = new Vector2 ( float.Parse(target [0]), float.Parse(target [1]) );
-
-							Debug.DrawLine (new Vector3 (sourcenav.x + 0.5f, 0, sourcenav.y + 0.5f), new Vector3 (targetnav.x + 0.5f, 0, targetnav.y + 0.5f), Color.green, 0.0f, false);
-						}
-					}
-				}
-			}
-		}
+	
 
 	}
 
 	void OnGUI() {
-		if (GUI.Button (new Rect (10, 10, 50, 50), "DIG")) {
-			EditTile (tileCursor.x, tileCursor.y);
-		}
+
 
 
 	}

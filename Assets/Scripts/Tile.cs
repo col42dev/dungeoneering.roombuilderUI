@@ -29,6 +29,8 @@ public class Tile {
 	public List<GameObject> gfxWall = null;
 	public bool ShouldSerializegfxWall() { return false; }
 
+	static Material [] mat = new Material[2] {null, null};
+
 	
 	public void Init(Vector2 tilepos, Transform parentTransform, int elevation, GameObject gfx) {
 
@@ -48,10 +50,12 @@ public class Tile {
 
 		this.gfx.transform.SetParent(parentTransform);
 
-
-		Material mat = Resources.Load("Materials/floortile" + this.elevation, typeof(Material)) as Material; // i.e. .png, .jpg, etc
+		if (mat[this.elevation] == null) {
+			Debug.Log ("Resources.Load");
+			mat[this.elevation] = Resources.Load ("Materials/floortile" + this.elevation, typeof(Material)) as Material; // i.e. .png, .jpg, etc
+		}
 		Material [] mats = new Material[1];
-		mats[0] = mat;
+		mats[0] = mat[this.elevation];
 		gfx.transform.GetChild(0).GetComponent<Renderer> ().materials = mats;
 
 	}
@@ -97,9 +101,12 @@ public class Tile {
 		gfx.transform.position = lpos;
 
 
-		Material mat = Resources.Load("Materials/floortile" + this.elevation, typeof(Material)) as Material; // i.e. .png, .jpg, etc
+		if (mat[this.elevation] == null) {
+			Debug.Log ("Resources.Load");
+			mat[this.elevation] = Resources.Load ("Materials/floortile" + this.elevation, typeof(Material)) as Material; // i.e. .png, .jpg, etc
+		}
 		Material [] mats = new Material[1];
-		mats[0] = mat;
+		mats[0] = mat[this.elevation];
 		gfx.transform.GetChild(0).GetComponent<Renderer> ().materials = mats;
 
 

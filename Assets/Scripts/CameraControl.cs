@@ -18,7 +18,37 @@ public class CameraControl : MonoBehaviour {
 		cameraOffset = new Vector3 (0f, 0f, -4f);
 		targetCameraOffset = cameraOffset;
 	}
-	
+
+	void OnGUI() {
+
+
+		MapGen mapgen = GameObject.Find("Map").GetComponent<MapGen>();
+		if (mapgen != null) 
+		{
+			if (GUI.Button (new Rect (Screen.width * .2f, Screen.height * 0.85f, Screen.width * .19f, Screen.height * 0.09f), "<")) {
+				targetCameraOffset = Quaternion.Euler(0, -90, 0) * targetCameraOffset;
+				targetRotationIncrement = -10;
+			}
+			if (GUI.Button (new Rect (Screen.width * .4f, Screen.height * 0.85f, Screen.width * .19f, Screen.height * 0.09f), "X")) {
+				mapgen.EditTile (mapgen.tileCursor.x, mapgen.tileCursor.y);
+			}
+			if (GUI.Button (new Rect (Screen.width * .6f, Screen.height * 0.85f, Screen.width * .19f, Screen.height * 0.09f), ">")) {
+				targetCameraOffset = Quaternion.Euler(0, +90, 0) * targetCameraOffset;
+				targetRotationIncrement = 10;
+			}
+
+			if (GUI.Button (new Rect (Screen.width * .4f, Screen.height * 0.75f, Screen.width * .19f, Screen.height * 0.09f), "^")) 
+			{
+				Vector2 targetPos = mapgen.tileCursorTarget + new Vector2((cameraOffset.x == 0f) ? 0f : -Mathf.Sign(cameraOffset.x), (cameraOffset.z == 0f) ? 0f :-Mathf.Sign(cameraOffset.z));
+				if ( mapgen.validDigLocation(targetPos))
+				{
+					mapgen.tileCursorTarget = targetPos;
+				}
+			}
+		}
+
+	}
+
 	// Update is called once per frame
 	void Update () {
 	

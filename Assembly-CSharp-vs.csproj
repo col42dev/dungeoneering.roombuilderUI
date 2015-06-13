@@ -49,10 +49,6 @@
      <Compile Include="Assets\Scripts\CameraControl.cs" />
      <Compile Include="Assets\Scripts\MapGen.cs" />
      <Compile Include="Assets\Scripts\Tile.cs" />
-     <None Include="Assets\Json60r8\readme.txt" />
-     <None Include="Assets\Json60r8\Bin\Newtonsoft.Json.xml" />
-     <None Include="Assets\Json60r8\license.txt" />
-     <None Include="Assets\HP Dungeon Creator\Documentation\ReadMe.txt" />
  <Reference Include="UnityEngine.Analytics">
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/UnityAnalytics/UnityEngine.Analytics.dll</HintPath>
  </Reference>
