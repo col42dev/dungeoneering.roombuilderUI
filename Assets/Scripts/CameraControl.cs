@@ -16,6 +16,8 @@ public class CameraControl : MonoBehaviour {
 	Touch touchZero;
 	Touch touchOne;
 
+	bool bTouchSizing = false;
+
 	GameObject roomScalerGFX;
 
 	// Use this for initialization
@@ -134,6 +136,7 @@ public class CameraControl : MonoBehaviour {
 
 			if (Input.touchCount == 2)
 			{
+				bTouchSizing = true;
 				Vector3 mouseButtonDownScreenPosVector = new Vector3( 0, 0, 0);
 				mouseButtonDownScreenPosVector.x = Mathf.Abs ( Input.GetTouch(0).position.x - Input.GetTouch(1).position.x ) - Mathf.Abs( touchZero.position.x - touchOne.position.x);
 				mouseButtonDownScreenPosVector.y = Mathf.Abs ( Input.GetTouch(0).position.y - Input.GetTouch(1).position.y ) - Mathf.Abs( touchZero.position.y - touchOne.position.y);
@@ -141,7 +144,7 @@ public class CameraControl : MonoBehaviour {
 				if ( mouseButtonDownScreenPosVector.x < 0) mouseButtonDownScreenPosVector.x = 0;
 				if ( mouseButtonDownScreenPosVector.y < 0) mouseButtonDownScreenPosVector.y = 0;
 
-				Vector3 widthScaler = new Vector3 (Mathf.RoundToInt ((mouseButtonDownScreenPosVector.x / Screen.width) * 8), 0, 0);
+				Vector3 widthScaler = new Vector3 (Mathf.RoundToInt ((mouseButtonDownScreenPosVector.x / Screen.width) * 6), 0, 0);
 				Vector3 heightScaler = new Vector3 (0, 0, Mathf.RoundToInt ((mouseButtonDownScreenPosVector.y / Screen.height) * 10));
 				
 				Vector3[] vertices = new Vector3[]
@@ -166,13 +169,13 @@ public class CameraControl : MonoBehaviour {
 				roomScalerGFX.gameObject.transform.rotation = Quaternion.Euler (0, transform.rotation.eulerAngles.y, 0);
 				roomScalerGFX.GetComponent<MeshFilter> ().mesh.vertices = vertices;
 			}
-			else
+
+
+			if ( bTouchSizing && Input.touchCount != 2)
 			{
 				roomScalerGFX.gameObject.SetActive (false);
-			}
+				bTouchSizing = false;
 
-			if ( Input.GetTouch(1).phase == TouchPhase.Ended)
-			{
 				Vector3 mouseButtonDownScreenPosVector = new Vector3( 0, 0, 0);
 				mouseButtonDownScreenPosVector.x = Mathf.Abs ( Input.GetTouch(0).position.x - Input.GetTouch(1).position.x ) - Mathf.Abs( touchZero.position.x - touchOne.position.x);
 				mouseButtonDownScreenPosVector.y = Mathf.Abs ( Input.GetTouch(0).position.y - Input.GetTouch(1).position.y ) - Mathf.Abs( touchZero.position.y - touchOne.position.y);
@@ -180,7 +183,7 @@ public class CameraControl : MonoBehaviour {
 				if ( mouseButtonDownScreenPosVector.x < 0) mouseButtonDownScreenPosVector.x = 0;
 				if ( mouseButtonDownScreenPosVector.y < 0) mouseButtonDownScreenPosVector.y = 0;
 
-				Vector3 widthScaler = new Vector3 (Mathf.RoundToInt ((mouseButtonDownScreenPosVector.x / Screen.width) * 8), 0, 0);
+				Vector3 widthScaler = new Vector3 (Mathf.RoundToInt ((mouseButtonDownScreenPosVector.x / Screen.width) * 6), 0, 0);
 				Vector3 heightScaler = new Vector3 (0, 0, Mathf.RoundToInt ((mouseButtonDownScreenPosVector.y / Screen.height) * 10));
 				
 				Vector3[] vertices = new Vector3[]
