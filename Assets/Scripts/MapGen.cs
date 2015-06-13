@@ -64,6 +64,7 @@ public class MapGen : MonoBehaviour {
 		tgs = new TileGraphSerilizable ();
 
 
+
 		CreateTileGraph ();
 
 		BuildWallsGfx ();
@@ -109,10 +110,10 @@ public class MapGen : MonoBehaviour {
 
 	public void EditTile(float x, float y) 
 	{
-		Debug.Log ("EditTileA:" + x + "," + y);
+		Debug.Log ("EditTile:" + x + "," + y);
 		if ( tgs != null && tgs.tileGraph.ContainsKey( Tile.MakeGraphKey( new Vector2(x, y)) ) == true)
 		{
-			Debug.Log ("EditTileB:" + x + "," + y);
+
 			tgs.tileGraphAt( new Vector2(x, y) ).EditTile(  new Vector2(x, y),  tgs.tileGraph,  tileGFXPrefab, wallPrefab, this.transform);
 		}
 	}
@@ -217,7 +218,7 @@ public class MapGen : MonoBehaviour {
 			{
 				if (tileCursor == thisGraphTile.pos)
 				{
-					thisGraphTile.Init( thisGraphTile.pos, this.transform, TileMapConstants.kLevel0, Instantiate(tileGFXPrefab));
+					thisGraphTile.Init( thisGraphTile.pos, this.transform, TileMapConstants.kLevel0 + 1, Instantiate(tileGFXPrefab));
 				}
 				else
 				{
