@@ -79,7 +79,7 @@ public class CameraControl : MonoBehaviour {
 		roomScalerGFX.gameObject.SetActive (false);
 
 
-		InvokeRepeating("OnTimedEvent_PanCamera", 0.0f, 0.4f);
+
 	}
 
 	private void OnTimedEvent_PanCamera()
@@ -122,7 +122,7 @@ public class CameraControl : MonoBehaviour {
 
 		
 
-			if (Application.platform != RuntimePlatform.Android) 
+			if ((Application.platform != RuntimePlatform.Android) && (Application.platform !=  RuntimePlatform.IPhonePlayer)) 
 			{
 				if (cameraOffset == targetCameraOffset) {
 					if (GUI.Button (new Rect (Screen.width * .05f, Screen.height * 0.01f, Screen.width * .2f, Screen.height * 0.11f), "<")) {
@@ -179,7 +179,7 @@ public class CameraControl : MonoBehaviour {
 
 		roomScalerGFX.transform.position = new Vector3 (mapgen.tileCursorTarget.x + 0.5f, 1.1f, mapgen.tileCursorTarget.y + 0.5f);
 
-		if (Application.platform == RuntimePlatform.Android) 
+		if ((Application.platform == RuntimePlatform.Android) || (Application.platform ==  RuntimePlatform.IPhonePlayer)) 
 		{
 			if (Input.touchCount == 1 && Input.GetTouch(0).phase == TouchPhase.Began)
 			{
@@ -191,12 +191,16 @@ public class CameraControl : MonoBehaviour {
 			if (Input.touchCount == 1)
 			{
 				// pan
-				if ( Mathf.Abs ( Input.GetTouch(0).position.y - touchZeroPan.position.y ) > Mathf.Abs ( Input.GetTouch(0).position.x - touchZeroPan.position.x )) // forward/backward quadrant
+				if (bTouchPanning == false)
 				{
-					if ( Mathf.Abs ( Input.GetTouch(0).position.y - touchZeroPan.position.y) > Screen.height * .1f) // min pan threshhold
+					if ( Mathf.Abs ( Input.GetTouch(0).position.y - touchZeroPan.position.y ) > Mathf.Abs ( Input.GetTouch(0).position.x - touchZeroPan.position.x )) // forward/backward quadrant
 					{
-						bTouchPanning = true;
-						bTouchPanningDirForward = (Input.GetTouch(0).position.y  > touchZeroPan.position.y) ? true : false;
+						if ( Mathf.Abs ( Input.GetTouch(0).position.y - touchZeroPan.position.y) > Screen.height * .1f) // min pan threshhold
+						{
+							bTouchPanning = true;
+							bTouchPanningDirForward = (Input.GetTouch(0).position.y  > touchZeroPan.position.y) ? true : false;
+							InvokeRepeating("OnTimedEvent_PanCamera", 0.0f, 0.4f);
+						}
 					}
 				}
 
@@ -227,6 +231,8 @@ public class CameraControl : MonoBehaviour {
 			{
 				bTouchRotate = false;
 				bTouchPanning=false;
+
+				CancelInvoke("OnTimedEvent_PanCamera");
 			}
 
 

@@ -218,7 +218,7 @@ public class MapGen : MonoBehaviour {
 			{
 				if (tileCursor == thisGraphTile.pos)
 				{
-					thisGraphTile.Init( thisGraphTile.pos, this.transform, TileMapConstants.kLevel0 + 1, Instantiate(tileGFXPrefab));
+					thisGraphTile.Init( thisGraphTile.pos, this.transform, TileMapConstants.kLevel0, Instantiate(tileGFXPrefab));
 				}
 				else
 				{
